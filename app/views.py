@@ -8,8 +8,8 @@ import os
 from app import app
 from flask import render_template, request, redirect, url_for, flash, session, abort, jsonify
 from werkzeug.utils import secure_filename
-
-
+from os import listdir
+from os.path import isfile, join, abspath, dirname
 ###
 # Routing for your application.
 ###
@@ -41,6 +41,17 @@ def add_file():
         return redirect(url_for('home'))
 
     return render_template('add_file.html')
+    
+@app.route('/filelisting/')
+def filelisting():
+    rootdir = os.getcwd()
+    print rootdir
+    #for subdir, dirs, files in os.walk(rootdir + 'static/uploads'):
+        #for file in files:
+            # myfiles = myfiles.append(os.path.join(subdir, file))
+    files = [f for f in listdir(app.config['UPLOAD_FOLDER']) if isfile(join(app.config['UPLOAD_FOLDER'], f))]
+    return render_template("filelisting.html", files=files)
+    
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
