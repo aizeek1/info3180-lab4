@@ -2,14 +2,24 @@
 
 {%  block main %}
 
-<h1>Uploaded Files</h1>
+<h1>Uploads</h1>
 
 <div>
+	<h3>Uploaded Images</h3>
+			<ul>
+			{% for image in images %}
+				<img style="width:350px; height:300px;" class="img-thumbnail" src="static/uploads/{{ image }}"/><br><br>
+			{% endfor %}
+			</ul>
+			
+	<h3>Uploaded Files</h3>
 			<ul>
 			{% for file in files %}
 				<li>{{ file }}</li>
 			{% endfor %}
 			</ul>
+			
 </div>
 
 {% endblock %}
+

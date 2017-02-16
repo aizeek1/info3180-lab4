@@ -10,6 +10,7 @@ from flask import render_template, request, redirect, url_for, flash, session, a
 from werkzeug.utils import secure_filename
 from os import listdir
 from os.path import isfile, join, abspath, dirname
+
 ###
 # Routing for your application.
 ###
@@ -49,11 +50,15 @@ def filelisting():
         
     rootdir = os.getcwd()
     print rootdir
-    #for subdir, dirs, files in os.walk(rootdir + 'static/uploads'):
-        #for file in files:
-            # myfiles = myfiles.append(os.path.join(subdir, file))
+    image=[]
+    fil=[]
     files = [f for f in listdir(app.config['UPLOAD_FOLDER']) if isfile(join(app.config['UPLOAD_FOLDER'], f))]
-    return render_template("filelisting.html", files=files)
+    for file in files:
+        if file.endswith(".jpg"):
+            image.append(file)
+        else:
+            fil.append(file)
+    return render_template("filelisting.html",files=fil,images=image)
     
 
 @app.route('/login', methods=['POST', 'GET'])
